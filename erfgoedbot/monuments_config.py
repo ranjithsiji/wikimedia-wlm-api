@@ -879,6 +879,172 @@ countries = {
             },
         ],
     },
+    ('ca', 'en') : { # Historic Places of Canada in English
+        'project' : u'wikipedia',
+        'lang' : u'en',
+        'headerTemplate' : u'HPC header',
+        'rowTemplate' : u'HPC row',
+        'commonsTemplate' : u'Historic Places in Canada',
+        'commonsTrackerCategory' : u'Heritage properties in Canada with known IDs',
+        'commonsCategoryBase' : u'Cultural heritage monuments in Canada',
+        'autoGeocode' : False,
+        'unusedImagesPage' : u'Wikipedia:WikiProject Historic sites/Unused images of Historic Places in Canada',
+        #'imagesWithoutIdPage' : u'',
+        'registrantUrlBase' : u'http://www.historicplaces.ca/en/rep-reg/place-lieu.aspx?id=%s',
+        'namespaces' : [0],
+        'table' : u'monuments_ca_(en)',
+        'truncate' : True,
+        'primkey' : u'dummyid', # Work with a dummy id for now. Three fields with ids, messy!
+        'fields' : [
+            {
+                'source' : u'dummyid',
+                'dest' : u'dummyid',
+                'type' : 'int(11)',
+                'auto_increment' : True,
+            },
+            {
+                'source' : u'name',
+                'dest' : u'name',
+                'type' : '',
+            },
+            {
+                'source' : u'address',
+                'dest' : u'address',
+            },
+            {
+                'source' : u'municipality',
+                'dest' : u'municipality',
+            },
+            {
+                'source' : u'prov_iso',
+                'dest' : u'prov_iso',
+            },
+            {
+                'source' : u'pc',
+                'dest' : u'pc',
+            },
+            {
+                'source' : u'lat',
+                'dest' : u'lat',
+            },
+            {
+                'source' : u'lon',
+                'dest' : u'lon',
+            },
+            {
+                'source' : u'image',
+                'dest' : u'image',
+            },
+            {
+                'source' : u'idf',
+                'dest' : u'idf',
+                'type' : 'int(11)',
+            },
+            {
+                'source' : u'idp',
+                'dest' : u'idp',
+                'type' : 'int(11)',
+            },
+            {
+                'source' : u'idm',
+                'dest' : u'idm',
+                'type' : 'int(11)',
+            },
+            {
+                'source' : u'name',
+                'dest' : u'monument_article',
+                'conv' : u'extractWikilink',
+            },
+            {
+                'source' : u'idf', #FIXME: Should be a list or tuple of the 3 fields
+                'dest' : u'registrant_url',
+                'conv' : u'generateRegistrantUrl',
+            },
+        ],
+    },
+    ('ca', 'fr') : { # Historic Places of Canada in French
+        'project' : u'wikipedia',
+        'lang' : u'fr',
+        'headerTemplate' : u'En-tête de tableau LPC',
+        'rowTemplate' : u'Ligne de tableau LPC',
+        'commonsTemplate' : u'Historic Places in Canada',
+        'commonsTrackerCategory' : u'Heritage properties in Canada with known IDs',
+        'commonsCategoryBase' : u'Cultural heritage monuments in Canada',
+        'autoGeocode' : False,
+        'unusedImagesPage' : u'Projet:Monuments historiques/Images de monuments canada non utilisées',
+        #'imagesWithoutIdPage' : u'',
+        'registrantUrlBase' : u'http://www.historicplaces.ca/fr/rep-reg/place-lieu.aspx?id=%s',
+        'namespaces' : [0, 100],
+        'table' : u'monuments_ca_(fr)',
+        'truncate' : True,
+        'primkey' : u'dummyid', # Work with a dummy id for now. Three fields with ids, messy!
+        'fields' : [
+            {
+                'source' : u'dummyid',
+                'dest' : u'dummyid',
+                'type' : 'int(11)',
+                'auto_increment' : True,
+            },
+            {
+                'source' : u'lieu',
+                'dest' : u'lieu',
+                'type' : '',
+            },
+            {
+                'source' : u'addresse',
+                'dest' : u'addresse',
+            },
+            {
+                'source' : u'municipalité',
+                'dest' : u'municipalite',
+            },
+            {
+                'source' : u'prov_iso',
+                'dest' : u'prov_iso',
+            },
+            {
+                'source' : u'cp',
+                'dest' : u'cp',
+            },
+            {
+                'source' : u'lat',
+                'dest' : u'lat',
+            },
+            {
+                'source' : u'lon',
+                'dest' : u'lon',
+            },
+            {
+                'source' : u'image',
+                'dest' : u'image',
+            },
+            {
+                'source' : u'idf',
+                'dest' : u'idf',
+                'type' : 'int(11)',
+            },
+            {
+                'source' : u'idp',
+                'dest' : u'idp',
+                'type' : 'int(11)',
+            },
+            {
+                'source' : u'idm',
+                'dest' : u'idm',
+                'type' : 'int(11)',
+            },
+            {
+                'source' : u'lieu',
+                'dest' : u'monument_article',
+                'conv' : u'extractWikilink',
+            },
+            {
+                'source' : u'idf', #FIXME: Should be a list or tuple of the 3 fields
+                'dest' : u'registrant_url',
+                'conv' : u'generateRegistrantUrl',
+            },
+        ],
+    },
     ('ch', 'de') : { # Monuments in Switzerland in German
         'project' : u'wikipedia',
         'lang' : u'de',
@@ -954,6 +1120,67 @@ countries = {
         #'imagesWithoutIdPage' : u'',
         'namespaces' : [0],
         'table' : u'monuments_ch_(en)',
+        'truncate' : False,
+        'primkey' : u'kgs_nr',
+        'fields' : [
+            {
+                'source' : u'KGS_nr',
+                'dest' : u'kgs_nr',
+                'type' : 'int(11)',
+            },
+            {
+                'source' : u'name',
+                'dest' : u'name',
+            },
+            {
+                'source' : u'address',
+                'dest' : u'address',
+            },
+            {
+                'source' : u'municipality',
+                'dest' : u'municipality',
+            },
+            {
+                'source' : u'canton',
+                'dest' : u'canton',
+            },
+            {
+                'source' : u'region-iso',
+                'dest' : u'region-iso',
+            },
+            {
+                'source' : u'CH1903_X',
+                'dest' : u'lat',
+                'conv' : u'CH1903ToLat',
+            },
+            {
+                'source' : u'CH1903_Y',
+                'dest' : u'lon',
+                'conv' : u'CH1903ToLon',
+            },
+            {
+                'source' : u'image',
+                'dest' : u'image',
+            },
+            {
+                'source' : u'name',
+                'dest' : u'monument_article',
+                'conv' : u'extractWikilink',
+            },
+        ]
+    },
+    ('ch', 'it') : { # Monuments in Switzerland in Italian
+        'project' : u'wikipedia',
+        'lang' : u'it',
+        'headerTemplate' : u'SIoCPoNaRS header',
+        'rowTemplate' : u'SIoCPoNaRS row',
+        'commonsTemplate' : u'Cultural property of national significance in Switzerland',
+        'commonsTrackerCategory' : u'Cultural properties of national significance in Switzerland with known IDs',
+        'commonsCategoryBase' : u'Cultural properties of national significance in Switzerland',
+        'unusedImagesPage' : u'',
+        #'imagesWithoutIdPage' : u'',
+        'namespaces' : [0],
+        'table' : u'monuments_ch_(it)',
         'truncate' : False,
         'primkey' : u'kgs_nr',
         'fields' : [
@@ -1339,6 +1566,80 @@ countries = {
                 'source' : u'systemnummer',
                 'dest' : u'registrant_url',
                 'conv' : u'generateRegistrantUrl',
+            },
+        ],
+    },
+    
+     ('gh', 'en') : { # Ghana monuments in English
+        'project' : u'wikipedia',
+        'lang' : u'en',
+        'headerTemplate' : u'Ghana Monument header',
+        'rowTemplate' : u'Ghana Monument row',
+        #'commonsTemplate' : u'Rijksmonument',
+        #'commonsTrackerCategory' : u'Rijksmonumenten with known IDs',
+        #'commonsCategoryBase' : u'Rijksmonumenten',
+        'autoGeocode' : False,
+        #'unusedImagesPage' : u'Wikipedia:Wikiproject/Erfgoed/Nederlandse Erfgoed Inventarisatie/Ongebruikte foto\'s',
+        #'imagesWithoutIdPage' : u'Wikipedia:Wikiproject/Erfgoed/Nederlandse Erfgoed Inventarisatie/Foto\'s zonder id',
+        'registrantUrlBase' : u'http://www.ghanamuseums.org/what-is-gmmb.php',
+        'namespaces' : [0],
+        'table' : u'monuments_gh_(en)',
+        'truncate' : False,
+        'primkey' : u'id',
+        'fields' : [
+            {
+                'source' : u'id',
+                'dest' : u'id',
+                'type' : 'varchar(11)',
+            },
+            {
+                'source' : u'name',
+                'dest' : u'name',
+            },
+			 {
+                'source' : u'alternative_names',
+                'dest' : u'alternative_names',
+            },
+            {
+                'source' : u'region',
+                'dest' : u'region',
+            }, 
+            {
+                'source' : u'region_iso',
+                'dest' : u'region_iso',
+            },
+            {
+                'source' : u'original_function',
+                'dest' : u'original_function',
+            }, 
+            {
+                'source' : u'built',
+                'dest' : u'built',
+            }, 
+            {
+                'source' : u'location',
+                'dest' : u'location',
+            }, 
+            {
+                'source' : u'comment',
+                'dest' : u'comment',
+            }, 
+            {
+                'source' : u'lat',
+                'dest' : u'lat',
+            },
+            {
+                'source' : u'lon',
+                'dest' : u'lon',
+            },
+            {
+                'source' : u'image',
+                'dest' : u'image',
+            },
+            {
+                'source' : u'name',
+                'dest' : u'monument_article',
+                'conv' : u'extractWikilink',
             },
         ],
     },
@@ -2242,6 +2543,62 @@ countries = {
             },
         ],
     },
+     ('in', 'en') : { # Monuments in India in English
+        'project' : u'wikipedia',
+        'lang' : u'en',
+        'headerTemplate' : u'ASI Monument header',
+        'rowTemplate' : u'ASI Monument row',
+        'namespaces' : [0,4],
+        'table' : u'monuments_in_(en)',
+        'truncate' : True,
+        'primkey' : (u'state_iso', u'circle', u'number'),
+        'fields' : [
+            {
+                'source' : u'number',
+                'dest' : u'number',
+                'type' : 'varchar(11)',
+            },
+            {
+                'source' : u'description',
+                'dest' : u'description',
+            },
+            {
+                'source' : u'location',
+                'dest' : u'location',
+            },
+            {
+                'source' : u'address',
+                'dest' : u'address',
+            },
+            {
+                'source' : u'district',
+                'dest' : u'district',
+            },
+            {
+                'source' : u'lat',
+                'dest' : u'lat',
+            },
+            {
+                'source' : u'lon',
+                'dest' : u'lon',
+            },
+            {
+                'source' : u'image',
+                'dest' : u'image',
+            },
+            {
+                'source' : u'state_iso',
+                'dest' : u'state_iso',
+            },
+ 			 {
+                'source' : u'circle',
+                'dest' : u'circle',
+                'type' : 'varchar(1)',
+            },
+
+        ],
+    },
+
     ('ie', 'en') : { # Monuments in Ireland
         'project' : u'wikipedia',
         'lang' : u'en',
@@ -2274,6 +2631,10 @@ countries = {
                 'dest' : u'county',
             },
             {
+                'source' : u'region-iso',
+                'dest' : u'region-iso',
+            },
+            {
                 'source' : u'lat',
                 'dest' : u'lat',
             },
@@ -2289,6 +2650,93 @@ countries = {
                 'source' : u'name',
                 'dest' : u'monument_article',
                 'conv' : u'extractWikilink',
+            },
+        ],
+    },
+    ('il', 'he') : { # Israel monuments in Hebrew
+        'project' : u'wikipedia',
+        'lang' : u'he',
+        'headerTemplate' : u'אתר מורשת בישראל כותרת',
+        'rowTemplate' : u'אתר מורשת בישראל בשורה',  
+        #'commonsTemplate' : u'NRHP',
+        #'commonsTrackerCategory' : u'National Register of Historic Places with known IDs',
+        #'commonsCategoryBase' : u'National Register of Historic Places',
+        'autoGeocode' : False,
+        #'unusedImagesPage' : u'Wikipedia:WikiProject National Register of Historic Places/Unused images',
+        #'imagesWithoutIdPage' : u'Wikipedia:WikiProject National Register of Historic Places/Images without refnum',
+        'namespaces' : [0, 4],
+        'table' : u'monuments_il_(he)',
+        'truncate' : False,
+        'primkey' : u'id',
+        'fields' : [
+            {
+                'source' : u'מספר אתר',
+                'dest' : u'id',
+                'type' : 'varchar(20)',
+            },
+            {
+                'source' : u'מחוז',
+                'dest' : u'district',
+            },
+            {
+                'source' : u'שם אתר',
+                'dest' : u'name',
+            },
+            {
+                'source' : u'שם ערך',
+                'dest' : u'article',
+            },
+            {
+                'source' : u'שם אתר באנגלית',
+                'dest' : u'name-en',
+            },
+            {
+                'source' : u'תיאור אתר',
+                'dest' : u'description',
+            },
+            {
+                'source' : u'תיאור אתר באנגלית',
+                'dest' : u'description-en',
+            },
+            {
+                'source' : u'אדריכל',
+                'dest' : u'architect',
+            },
+            {
+                'source' : u'שנת הקמה',
+                'dest' : u'year',
+            },
+            {
+                'source' : u'סוג אתר',
+                'dest' : u'type',
+            },
+            {
+                'source' : u'קטגוריה בוויקישיתוף',
+                'dest' : u'commonscat',
+            },
+            {
+                'source' : u'כתובת',
+                'dest' : u'address',
+            },
+            {
+                'source' : u'גוש',
+                'dest' : u'area',
+            },
+            {
+                'source' : u'חלקה',
+                'dest' : u'lot',
+            },
+            {
+                'source' : u'LAT',
+                'dest' : u'lat',
+            },
+            {
+                'source' : u'LONG',
+                'dest' : u'lon',
+            },
+            {
+                'source' : u'תמונה',
+                'dest' : u'image',
             },
         ],
     },
@@ -2865,6 +3313,10 @@ countries = {
                 'type' : 'int(11)',
             },
             {
+                'source' : u'region-iso',
+                'dest' : u'region-iso',
+            },
+            {
                 'source' : u'designacoes',
                 'dest' : u'designacoes',
             },
@@ -2982,6 +3434,66 @@ countries = {
                 'source' : u'denumire',
                 'dest' : u'monument_article',
                 'conv' : u'extractWikilink',
+            },
+        ],
+    },
+    ('rs', 'sr') : { # Monuments in Serbia in Serbian
+        'project' : u'wikipedia',
+        'lang' : u'sr',
+        'headerTemplate' : u'Споменици заглавље',
+        'rowTemplate' : u'Споменици ред',
+        #'commonsTemplate' : u'Rijksmonument',
+        #'commonsTrackerCategory' : u'Rijksmonumenten with known IDs',
+        #'commonsCategoryBase' : u'Rijksmonumenten',
+        'autoGeocode' : True,
+        #'unusedImagesPage' : u'Wikipedia:Wikiproject/Erfgoed/Nederlandse Erfgoed Inventarisatie/Ongebruikte foto\'s',
+        #'imagesWithoutIdPage' : u'Wikipedia:Wikiproject/Erfgoed/Nederlandse Erfgoed Inventarisatie/Foto\'s zonder id',
+        #'registrantUrlBase' : u'http://monumentenregister.cultureelerfgoed.nl/php/main.php?cAction=search&sCompMonNr=%s',
+        'namespaces' : [0],
+        'table' : u'monuments_rs_(sr)',
+        'truncate' : False,
+        'primkey' : u'id',
+        'fields' : [
+            {
+                'source' : u'ИД',
+                'dest' : u'id',
+                'type' : 'varchar(11)',
+            },
+            {
+                'source' : u'Насеље',
+                'dest' : u'municipality',
+            },
+            {
+                'source' : u'Адреса',
+                'dest' : u'address',
+            },
+            {
+                'source' : u'Назив',
+                'dest' : u'name',
+            },
+            {
+                'source' : u'Општина',
+                'dest' : u'district',
+            },
+            {
+                'source' : u'Надлежни_завод',
+                'dest' : u'authority',
+            },
+            {
+                'source' : u'гшир',
+                'dest' : u'lat',
+            },
+            {
+                'source' : u'гдуж',
+                'dest' : u'lon',
+            },
+            {
+                'source' : u'Слика',
+                'dest' : u'image',
+            },
+            {
+                'source' : u'Назив',
+                'dest' : u'monument_article',
             },
         ],
     },
@@ -3115,7 +3627,7 @@ countries = {
     ('se', 'sv') : { # Monuments in Sweden in Swedish
         'project' : u'wikipedia',
         'lang' : u'sv',
-        'headerTemplate' : u'', #Confusing
+        'headerTemplate' : u'BBR-huvud', #Confusing
         'rowTemplate' : u'BBR',
         'footerTemplate' : u'',
         'commonsTemplate' : u'Fornminne',
@@ -3138,6 +3650,10 @@ countries = {
             {
                 'source' : u'namn',
                 'dest' : u'namn',
+            },
+            {
+                'source' : u'region-iso',
+                'dest' : u'region-iso',
             },
             {
                 'source' : u'funktion',

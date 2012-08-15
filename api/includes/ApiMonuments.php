@@ -79,7 +79,11 @@ class ApiMonuments extends ApiBase {
 		}
 		$this->isComplex = true;
 	}
-	
+
+	protected function getCountry() {
+		return $this->getParam( 'sradm0' );
+	}
+
 	function search() {
 		global $dbMiserMode;
 
@@ -97,7 +101,10 @@ class ApiMonuments extends ApiBase {
 		$forceIndex = false;
 		$orderby = Monuments::$dbPrimaryKey;
 		$db = Database::getDb();
-		
+		$enableUseLang = true;
+		$useDefaultLang = false;
+		$smartFilter = false;
+
 		foreach ( Monuments::$dbFields as $field ) {
 			if ( $this->getParam( "srwith$field" ) ) {
 				$where[] = $db->escapeIdentifier( $field ) . " <> ''";
@@ -107,7 +114,7 @@ class ApiMonuments extends ApiBase {
 			}
 		}
 		foreach ( Monuments::$dbFields as $field ) {
-			$value = $this->getParam( "sr$field" );
+			$value = urldecode( $this->getParam( "sr$field" ) );
 			if ( $value === false ) continue;
 			
 			if ( is_string( $value ) && substr( $value, 0, 1 ) == '~' ) {
@@ -115,6 +122,7 @@ class ApiMonuments extends ApiBase {
 					$this->error( "Column `$field` does not support full-text search`" );
 				}
 				$this->complexQuery();
+				$useDefaultLang = true;
 				$where[] = "MATCH ({$db->escapeIdentifier( $field )}) AGAINST ("
 					. $db->quote( substr( $value, 1 ) ) . ' IN BOOLEAN MODE)';
 				// Postfix the name with primary key because name can be duplicate.
@@ -137,6 +145,7 @@ class ApiMonuments extends ApiBase {
 		}
         
         if ( $this->getParam('bbox') || $this->getParam('BBOX') || $this->getParam( 'coord' ) ) {
+			$enableUseLang = false;
 			if ( $this->getParam('bbox') ) {
                 $bbox = $this->getParam('bbox');
             } else {
@@ -173,9 +182,16 @@ class ApiMonuments extends ApiBase {
 			$where['lon_int'] = self::intRange( $bl_lon, $tr_lon );
 			$where[] = "`lat` BETWEEN $bl_lat AND $tr_lat";
 			$where[] = "`lon` BETWEEN $bl_lon AND $tr_lon";
+			$smartFilter = true;
+			$useDefaultLang = true;
         }
+		$useLang = $this->getUseLang( $useDefaultLang );
+		if ( $enableUseLang && $useLang && !isset( $where['lang'] ) ) {
+			$where['lang'] = $useLang;
+		}
 
-        /* FIXME: User should be able to set sort fields and order */
+
+		/* FIXME: User should be able to set sort fields and order */
 		if ( $this->getParam('format') == 'kml' ) {
 			$orderby = array('monument_random');
 		} elseif ( $this->getParam('format') == 'html' ) {
@@ -197,6 +213,36 @@ class ApiMonuments extends ApiBase {
 		
 		$res = $db->select( array_merge( Monuments::$dbPrimaryKey, $this->getParam( 'props' ) ), Monuments::$dbTable, $where,
 			$orderby, $limit + 1, $forceIndex );
+
+		if ( $smartFilter ) {
+			$rows = array();
+			$numRows = 0;
+
+			// Prepare an array of language weights signifying how much desireable each of them is
+			$country = $this->getCountry();
+			$weights = array_flip( ApiCountries::getAllLanguages() );
+			$weights = array_map( function() { return 1; }, $weights ); // Prefer no language
+			$weights[$useLang] = 1000; // ...other than uselang
+			$defaultLang = ApiCountries::getDefaultLanguage( $country ); // And country's default language
+			$weights[$defaultLang] = 500;
+
+			foreach ( $res as $row ) {
+				$numRows++;
+				$id = "{$row->country}-{$row->id}";
+				if ( !isset( $weights[$row->lang] ) ) { // foolproof in case cache is out of date
+					$weights[$row->lang] = 1;
+				}
+				if ( !isset( $rows[$id] ) || ( $weights[$row->lang] > $weights[$rows[$id]->lang] ) ) {
+					$rows[$id] = $row;
+				}
+			}
+			if ( $numRows > $limit ) {
+				// Tweak limit to ensure pagination will happen
+				$limit = count( $rows ) - 1;
+			}
+			$res = $rows;
+		}
+
 		$this->getFormatter()->output( $res, $limit, 'srcontinue', $this->getParam( 'props' ), $orderby );
 	}
 	
