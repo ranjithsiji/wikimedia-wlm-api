@@ -1,13 +1,6 @@
 <?php
 
-/* Localization. */
-require_once( '/home/project/i/n/t/intuition/ToolserverI18N/ToolStart.php' );
-
-$opts = array(
-    'domain' => 'MonumentsAPI', // name of your main text-domain here
-    'globalfunctions' => true, // defines _(), _e() and _g() as shortcut for $I18N->msg( .. )
-);
-$I18N = new TsIntuition( $opts );
+require_once( dirname( dirname( __FILE__ ) ) . '/api/common.php' );
 
 ?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
@@ -73,7 +66,8 @@ Format		</label>
 			<option value="html"> html </option>
 			<option value="poi"> poi </option>
 			<option value="gpx"> gpx </option>
-			<option value="googlemaps"> googlemaps </option>			<option value="kml"> kml </option>
+			<option value="googlemaps"> googlemaps </option>
+			<option value="kml"> kml </option>
 			<option value="layar"> layar </option>
 			<option value="json"> json </option>
 			<option value="osm"> osm </option>
