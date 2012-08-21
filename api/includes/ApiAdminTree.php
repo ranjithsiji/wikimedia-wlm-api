@@ -34,9 +34,9 @@ class ApiAdminTree extends ApiBase {
 				ApiBase::PARAM_DFLT => false,
 				ApiBase::PARAM_TYPE => 'string',
 			),
-			'admlang' => array(
+			'admtranslate' => array(
 				ApiBase::PARAM_DFLT => false,
-				ApiBase::PARAM_TYPE => 'string',
+				ApiBase::PARAM_TYPE => 'boolean',
 			),
 		);
 		$params = array_merge_recursive( $defaultParams, $params );
@@ -79,12 +79,29 @@ class ApiAdminTree extends ApiBase {
 			if ( $useLang != $countryLang && $countryLang ) {
 				$this->fallbackLanguage = Language::newFromCode( $countryLang );
 			}
-			$data = $this->getChildrenFromTree( $useLang, $admintree_array );
+			if ( $this->getParam( 'admtranslate' ) ) {
+				$data = $this->getTranslations( $admintree_array );
+			} else {
+				$data = $this->getChildrenFromTree( $useLang, $admintree_array );
+			}
 		} else {
 			$data = $this->getTopLevelAdmNames();
 		}
 
 		$this->getFormatter()->output( $data, 999999999, null, $display_fields, null );
+	}
+
+	private function getTranslations( array $adminTree ) {
+		$result = array();
+		for ( $i = 0; $i < count( $adminTree ); $i++ ) {
+			$row = array(
+				'level' => $i,
+				'name' => $adminTree[$i]
+			);
+			$this->translateRow( $row );
+			$result[] = $row;
+		}
+		return $result;
 	}
 
 	/**
