@@ -16,11 +16,11 @@ CREATE TABLE `monuments_all_tmp` (
   `country` varchar(10) NOT NULL DEFAULT '',
   `lang` varchar(10) NOT NULL DEFAULT '',
   `id` varchar(25) NOT NULL DEFAULT '0',
-  `adm0` varchar(5) NOT NULL DEFAULT '',
-  `adm1` varchar(10) DEFAULT NULL,
-  `adm2` varchar(255) DEFAULT NULL,
-  `adm3` varchar(255) DEFAULT NULL,
-  `adm4` varchar(255) DEFAULT NULL,
+  `adm0` varchar(3) NOT NULL DEFAULT '',
+  `adm1` varchar(7) DEFAULT NULL,
+  `adm2` varchar(100) DEFAULT NULL,
+  `adm3` varchar(150) DEFAULT NULL,
+  `adm4` varchar(200) DEFAULT NULL,
   `name` varchar(255) NOT NULL DEFAULT '',
   `address` varchar(255) NOT NULL DEFAULT '',
   `municipality` varchar(255) NOT NULL DEFAULT '',
@@ -1089,6 +1089,29 @@ SELECT 'no' AS `country`,
         `monument_article` AS `monument_article`,
         `registrant_url` AS `registrant_url`
 	FROM `monuments_no_(no)`;
+/* Panamá */
+REPLACE INTO `monuments_all_tmp` (`country`, `lang`, `id`, `adm0`, `adm1`, `adm2`, `adm3`, `adm4`, `name`, `address`, `municipality`, `lat`,  `lon`, `lat_int`,  `lon_int`,  `image`,  `source`, `changed`, `monument_article`, `registrant_url` )
+SELECT 'pa' AS `country`,
+       'es' AS `lang`,
+		`id` AS `id`, 
+		'pa' AS `adm0`,
+		NULL AS `adm1`,
+		NULL AS `adm2`,
+		NULL AS `adm3`,
+		NULL AS `adm4`,
+	`nombre` AS `name`,
+	`dirección` AS `address`,
+	`provincia` AS `municipality`,
+	`lat` AS `lat`,
+	`lon` AS `lon`,
+	ROUND(`lat` * @granularity) AS `lat_int`,
+	ROUND(`lon` * @granularity) AS `lon_int`,
+	`imagen` AS `image`,
+	`source` AS `source`,
+	`changed` AS `changed`,
+    `monument_article` AS `monument_article`,
+    '' AS `registrant_url`
+	FROM `monuments_pl_(pl)`;
 /* Poland */
 REPLACE INTO `monuments_all_tmp` (`country`, `lang`, `id`, `adm0`, `adm1`, `adm2`, `adm3`, `adm4`, `name`, `address`, `municipality`, `lat`,  `lon`, `lat_int`,  `lon_int`,  `image`,  `source`, `changed`, `monument_article`, `registrant_url` )
 SELECT 'pl' AS `country`,
