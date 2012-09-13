@@ -10,7 +10,7 @@ if ( get_magic_quotes_gpc() ) {
  */
 class ApiMonuments extends ApiBase {
 	const EARTH_RADIUS = 6371010;
-	const MAX_GEOSEARCH_AREA = 0.04;// 0.2 * 0.2 degrees
+	const MAX_GEOSEARCH_AREA = 0.041;// 0.2 * 0.2 degrees
 	const GRANULARITY = 20;
 
 	public function __construct() {
@@ -232,10 +232,10 @@ class ApiMonuments extends ApiBase {
 			$props[] = 'lon';
 			$props = array_unique( $props );
         } elseif ( $this->getParam( 'sradm0' ) ) {
-			$orderby = array_merge( array( 'name' ), $orderby );
 			for ( $i = 0; $i < 5 && $this->getParam( "sradm{$i}" ) !== false; $i++) {
 				$forceIndex = "admin_levels{$i}";
 			}
+			$orderby = array( 'name', 'country', 'id' );
 		}
 
 		$useLang = $this->getUseLang( $useDefaultLang );

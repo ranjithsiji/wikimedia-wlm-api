@@ -2,11 +2,11 @@
 
 class ApiCountries extends ApiBase {
 	public static $defaultLanguages = array(
-		'be' => 'fr',
+		'be' => 'nl',
 		'ch' => 'de',
 		'es' => 'es',
 		'fr' => 'fr',
-		'sk' => 'sv',
+		'sk' => 'sk',
 		'it' => 'it',
 	);
 
